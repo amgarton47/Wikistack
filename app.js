@@ -3,18 +3,22 @@ const express = require('express');
 const layout = require('./views/layout.js');
 // const { db } = require('./models');
 const models = require('./models');
-const PORT = 3000;
 
+const wikiRouter = require('./routes/wiki.js');
+const userRouter = require('./routes/user.js');
+
+const PORT = 3000;
 
 const app = express();
 
 app.use(morgan('dev'));
 app.use(express.static(__dirname+"/public"));
 app.use(express.urlencoded({extended:false}));
+app.use('/wiki', wikiRouter)
 
 app.get('/',(req,res)=>{
-  console.log('HELOOOOOOOO');
-  res.send(layout(""));
+  // res.send(layout(""));
+  res.redirect('/wiki');
 })
 
 models.db.authenticate().
